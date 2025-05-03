@@ -21,7 +21,6 @@ public class Notification {
         this.createdAt = createdAt;
     }
 
-    // Getters and Setters
     public int getNotificationId() {
         return notificationId;
     }

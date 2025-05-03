@@ -1,13 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package controller;
 
-/**
- *
- * @author acer
- */
+import model.Subscription;
+
 public class SubscriptionController {
-    
+    public void changeSubscriptionStatus(Subscription subscription, String newStatus) {
+        subscription.setStatus(newStatus);
+        System.out.println("Changed subscription status to: " + newStatus);
+    }
 }

@@ -1,9 +1,9 @@
-
 package model;
 
+import java.sql.Timestamp;
 
 public class User {
-     private int userId;
+    private int userId;
     private String name;
     private String email;
     private String password;
@@ -11,7 +11,9 @@ public class User {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    public User(int userId, String name, String email, String password, String role, Timestamp createdAt, Timestamp updatedAt) {
+    // Full constructor
+    public User(int userId, String name, String email, String password, 
+                String role, Timestamp createdAt, Timestamp updatedAt) {
         this.userId = userId;
         this.name = name;
         this.email = email;
@@ -19,6 +21,11 @@ public class User {
         this.role = role;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    // Default constructor if needed
+    public User() {
+        // Initialize with default values if needed
     }
 
     // Getters and Setters
@@ -77,5 +84,17 @@ public class User {
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
-    
+
+    // Optional: Override toString() for debugging
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }
