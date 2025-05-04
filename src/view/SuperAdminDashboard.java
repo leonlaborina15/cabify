@@ -757,7 +757,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 if (adminId != null) {
                     controller.setUserRoleToAdmin(adminId);
                 }
-
                 controller.addAuditLog(1, "Updated Restaurant",
                         "Updated restaurant ID: " + restaurantId + " to name: " + name
                         + ", location: " + loc + ", capacity: " + cap);
@@ -768,7 +767,15 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Failed to update restaurant in database!");
             }
         } else {
-
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to add this restaurant?",
+                    "Confirm Add",
+                    JOptionPane.YES_NO_OPTION
+            );
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
             boolean success = controller.addRestaurant(
                     name,
                     loc,
@@ -779,8 +786,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 if (adminId != null) {
                     controller.setUserRoleToAdmin(adminId);
                 }
-
-                //audit logs
                 controller.addAuditLog(1, "Created Restaurant", "Added new restaurant: " + name + " at " + loc + ", capacity: " + cap);
                 loadRestaurantManagementTable();
                 loadAuditLogs();
@@ -797,6 +802,16 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         int selectedRow = restoTableManagement.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a restaurant to delete.");
+            return;
+        }
+        // Confirmation before delete
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to delete the selected restaurant?",
+                "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
 
