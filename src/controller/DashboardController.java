@@ -13,9 +13,7 @@ public class DashboardController {
     public int getTotalUsers() {
         int totalUsers = 0;
         String sql = "SELECT COUNT(*) AS total FROM user";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 totalUsers = rs.getInt("total");
             }
@@ -29,9 +27,7 @@ public class DashboardController {
     public int getTotalRestaurants() {
         int totalRestaurants = 0;
         String sql = "SELECT COUNT(*) AS total FROM restaurant";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             if (rs.next()) {
                 totalRestaurants = rs.getInt("total");
             }
@@ -44,13 +40,11 @@ public class DashboardController {
     // Get all restaurants with admin name (or "No Admin Assigned" if none)
     public List<String[]> getAllRestaurants() {
         List<String[]> restaurants = new ArrayList<>();
-        String sql = "SELECT r.restaurant_id, r.name AS restaurant_name, r.location, r.max_capacity, " +
-                     "COALESCE(u.name, 'No Admin Assigned') AS admin_name " +
-                     "FROM restaurant r " +
-                     "LEFT JOIN user u ON r.admin_id = u.user_id";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        String sql = "SELECT r.restaurant_id, r.name AS restaurant_name, r.location, r.max_capacity, "
+                + "COALESCE(u.name, 'No Admin Assigned') AS admin_name "
+                + "FROM restaurant r "
+                + "LEFT JOIN user u ON r.admin_id = u.user_id";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String restoId = rs.getString("restaurant_id");
                 String name = rs.getString("restaurant_name");
@@ -69,9 +63,7 @@ public class DashboardController {
     public List<String[]> getAllUsers() {
         List<String[]> users = new ArrayList<>();
         String sql = "SELECT user_id, name FROM user";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String id = rs.getString("user_id");
                 String name = rs.getString("name");
@@ -87,9 +79,7 @@ public class DashboardController {
     public List<String> getAllAdmins() {
         List<String> admins = new ArrayList<>();
         String sql = "SELECT name FROM user WHERE role = 'Resto Admin'";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 admins.add(rs.getString("name"));
             }
@@ -102,8 +92,7 @@ public class DashboardController {
     // Delete a restaurant by its ID
     public boolean deleteRestaurantById(String restaurantId) {
         String sql = "DELETE FROM restaurant WHERE restaurant_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, restaurantId);
             int affectedRows = stmt.executeUpdate();
             return affectedRows > 0;
@@ -116,8 +105,7 @@ public class DashboardController {
     // Update restaurant (including admin assignment)
     public boolean updateRestaurantAdmin(String restaurantId, String adminId, String name, String location, int capacity) {
         String sql = "UPDATE restaurant SET name = ?, location = ?, max_capacity = ?, admin_id = ? WHERE restaurant_id = ?";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, location);
             stmt.setInt(3, capacity);
@@ -138,8 +126,7 @@ public class DashboardController {
     // Add restaurant (including admin assignment)
     public boolean addRestaurant(String name, String location, int capacity, String adminId) {
         String sql = "INSERT INTO restaurant (name, location, max_capacity, admin_id) VALUES (?, ?, ?, ?)";
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, name);
             stmt.setString(2, location);
             stmt.setInt(3, capacity);
@@ -155,47 +142,56 @@ public class DashboardController {
             return false;
         }
     }
-    
+
     public boolean setUserRoleToAdmin(String userId) {
-    String sql = "UPDATE user SET role = 'Resto Admin' WHERE user_id = ?";
+        String sql = "UPDATE user SET role = 'Resto Admin' WHERE user_id = ?";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, userId);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<String[]> getAllLogs() {
+        List<String[]> logs = new ArrayList<>();
+        String sql = "SELECT l.log_id, u.name AS user_name, l.action, l.description, l.created_at "
+                + "FROM audit_log l "
+                + "JOIN user u ON l.user_id = u.user_id "
+                + "ORDER BY l.created_at DESC";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String logId = rs.getString("log_id");
+                String userName = rs.getString("user_name");
+                String action = rs.getString("action");
+                String desc = rs.getString("description");
+                String createdAt = rs.getString("created_at");
+                logs.add(new String[]{logId, userName, action, desc, createdAt});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return logs;
+    }
+    
+    public boolean sendNotification(String message, String category) {
+    String sql = "INSERT INTO notification (user_id, restaurant_id, message, notification_type, status, created_at) " +
+                 "VALUES (?, ?, ?, ?, ?, NOW())";
     try (Connection conn = DatabaseConnection.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setString(1, userId);
-        int affectedRows = stmt.executeUpdate();
-        return affectedRows > 0;
+        stmt.setNull(1, java.sql.Types.INTEGER);
+        stmt.setNull(2, java.sql.Types.INTEGER); 
+        stmt.setString(3, message);
+        stmt.setString(4, category);
+        stmt.setString(5, "Pending");
+        int rows = stmt.executeUpdate();
+        return rows > 0;
     } catch (Exception e) {
         e.printStackTrace();
         return false;
     }
 }
-    
-    public List<String[]> getAllLogs() {
-    List<String[]> logs = new ArrayList<>();
-    String sql = "SELECT l.log_id, u.name AS user_name, l.action, l.description, l.created_at " +
-                 "FROM audit_log l " +
-                 "JOIN user u ON l.user_id = u.user_id " +
-                 "ORDER BY l.created_at DESC";
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
-        while (rs.next()) {
-            String logId = rs.getString("log_id");
-            String userName = rs.getString("user_name");
-            String action = rs.getString("action");
-            String desc = rs.getString("description");
-            String createdAt = rs.getString("created_at");
-            logs.add(new String[]{logId, userName, action, desc, createdAt});
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return logs;
-}
-    
-    
-    
-    
-    
-    
-    
+
 }

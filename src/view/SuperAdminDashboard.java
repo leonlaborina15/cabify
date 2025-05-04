@@ -10,54 +10,55 @@ import javax.swing.table.DefaultTableModel;
 
 public class SuperAdminDashboard extends javax.swing.JFrame {
 
-   
     public SuperAdminDashboard() {
         initComponents();
         loadDashboardData();
         loadRestaurantManagementTable();
         populateRestoAdminDropdown();
-        
-        
+
         Font headerFont = new Font("Segoe UI", Font.BOLD, 12);
         Color headerColor = new Color(32, 136, 203);
 
-            restoTable.getTableHeader().setFont(headerFont);
-            restoTable.getTableHeader().setOpaque(false);
-            restoTable.getTableHeader().setBackground(headerColor);
-            restoTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            restoTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            restoTable.getColumnModel().getColumn(0).setMinWidth(50);
-            restoTable.getColumnModel().getColumn(0).setResizable(false);
-            restoTable.getColumnModel().getColumn(3).setMaxWidth(100);
-            restoTable.getColumnModel().getColumn(3).setMinWidth(100);
-            restoTable.getColumnModel().getColumn(3).setResizable(false);
+        restoTable.getTableHeader().setFont(headerFont);
+        restoTable.getTableHeader().setOpaque(false);
+        restoTable.getTableHeader().setBackground(headerColor);
+        restoTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        restoTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        restoTable.getColumnModel().getColumn(0).setMinWidth(50);
+        restoTable.getColumnModel().getColumn(0).setResizable(false);
+        restoTable.getColumnModel().getColumn(3).setMaxWidth(100);
+        restoTable.getColumnModel().getColumn(3).setMinWidth(100);
+        restoTable.getColumnModel().getColumn(3).setResizable(false);
 
-            restoTableManagement.getTableHeader().setFont(headerFont);
-            restoTableManagement.getTableHeader().setOpaque(false);
-            restoTableManagement.getTableHeader().setBackground(headerColor);
-            restoTableManagement.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            restoTableManagement.getColumnModel().getColumn(0).setMaxWidth(50);
-            restoTableManagement.getColumnModel().getColumn(0).setMinWidth(50);
-            restoTableManagement.getColumnModel().getColumn(0).setResizable(false);
-            restoTableManagement.getColumnModel().getColumn(3).setMaxWidth(100);
-            restoTableManagement.getColumnModel().getColumn(3).setMinWidth(100);
-            restoTableManagement.getColumnModel().getColumn(3).setResizable(false);
+        restoTableManagement.getTableHeader().setFont(headerFont);
+        restoTableManagement.getTableHeader().setOpaque(false);
+        restoTableManagement.getTableHeader().setBackground(headerColor);
+        restoTableManagement.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        restoTableManagement.getColumnModel().getColumn(0).setMaxWidth(50);
+        restoTableManagement.getColumnModel().getColumn(0).setMinWidth(50);
+        restoTableManagement.getColumnModel().getColumn(0).setResizable(false);
+        restoTableManagement.getColumnModel().getColumn(3).setMaxWidth(100);
+        restoTableManagement.getColumnModel().getColumn(3).setMinWidth(100);
+        restoTableManagement.getColumnModel().getColumn(3).setResizable(false);
 
-            auditTable.getTableHeader().setFont(headerFont);
-            auditTable.getTableHeader().setOpaque(false);
-            auditTable.getTableHeader().setBackground(headerColor);
-            auditTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-            auditTable.getColumnModel().getColumn(0).setMaxWidth(50);
-            auditTable.getColumnModel().getColumn(0).setMinWidth(50);
-            auditTable.getColumnModel().getColumn(0).setResizable(false);
-            auditTable.getColumnModel().getColumn(3).setMaxWidth(100);
-            auditTable.getColumnModel().getColumn(3).setMinWidth(100);
-            auditTable.getColumnModel().getColumn(3).setResizable(false);
-            
+        auditTable.getTableHeader().setFont(headerFont);
+        auditTable.getTableHeader().setOpaque(false);
+        auditTable.getTableHeader().setBackground(headerColor);
+        auditTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        auditTable.getColumnModel().getColumn(0).setMaxWidth(50);
+        auditTable.getColumnModel().getColumn(0).setMinWidth(50);
+        auditTable.getColumnModel().getColumn(0).setResizable(false);
+        auditTable.getColumnModel().getColumn(2).setMaxWidth(150);
+        auditTable.getColumnModel().getColumn(2).setMinWidth(150);
+        auditTable.getColumnModel().getColumn(2).setResizable(false);
+          auditTable.getColumnModel().getColumn(0).setResizable(false);
+        auditTable.getColumnModel().getColumn(1).setMaxWidth(150);
+        auditTable.getColumnModel().getColumn(1).setMinWidth(150);
+        auditTable.getColumnModel().getColumn(1).setResizable(false);
 
         setDefaultFormState();
-        
-         loadAuditLogs();
+
+        loadAuditLogs();
 
     }
 
@@ -107,7 +108,14 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         auditTable = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        notifMessage = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        notifCategory = new javax.swing.JComboBox<>();
+        sendNotif = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -260,7 +268,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jScrollPane1))))
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,7 +536,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(58, 58, 58)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -574,8 +582,8 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        auditTable.setFocusable(false);
         auditTable.setRowHeight(25);
-        auditTable.setRowSelectionAllowed(false);
         auditTable.setSelectionBackground(new java.awt.Color(34, 40, 49));
         jScrollPane3.setViewportView(auditTable);
 
@@ -592,7 +600,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 902, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -606,23 +614,98 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
         auditLog.addTab("Audit Logs", jPanel7);
 
+        jPanel6.setBackground(new java.awt.Color(34, 40, 49));
+
+        notifMessage.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel16.setText("Category:");
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel17.setText("Message:");
+
+        notifCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crowd Status", "System Update", "Emergency" }));
+
+        sendNotif.setBackground(new java.awt.Color(118, 171, 174));
+        sendNotif.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        sendNotif.setForeground(new java.awt.Color(255, 255, 255));
+        sendNotif.setText("SEND");
+        sendNotif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendNotifActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(166, 166, 166)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(notifCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel17)
+                    .addComponent(notifMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sendNotif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(notifMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(notifCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(sendNotif, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("AUDIT LOGS");
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("SEND NOTIFICATIONS");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1266, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(229, 229, 229)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel11)
+                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(274, Short.MAX_VALUE))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(554, 554, 554)
+                    .addComponent(jLabel10)
+                    .addContainerGap(554, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 657, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(54, Short.MAX_VALUE)
+                .addComponent(jLabel11)
+                .addGap(31, 31, 31)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
+            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addGap(304, 304, 304)
+                    .addComponent(jLabel10)
+                    .addContainerGap(305, Short.MAX_VALUE)))
         );
 
         auditLog.addTab("Notifications", jPanel6);
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("DASHBOARD");
-        auditLog.addTab("tab5", jLabel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -632,15 +715,180 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(auditLog, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+            .addComponent(auditLog, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
+        String name = restoName.getText().trim();
+        String loc = location.getText().trim();
+        String cap = capacity.getText().trim();
+        String selected = (String) restoAdminDropdown.getSelectedItem();
+        String adminId = null;
+
+        if (!"None".equals(selected)) {
+            int idx = selected.lastIndexOf("ID: ");
+            if (idx != -1) {
+                adminId = selected.substring(idx + 4, selected.length() - 1).trim();
+            }
+        }
+        int selectedRow = restoTableManagement.getSelectedRow();
+
+        if (name.isEmpty() || loc.isEmpty() || cap.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields.");
+            return;
+        }
+
+        DashboardController controller = new DashboardController();
+
+        if (selectedRow >= 0) {
+            String restaurantId = model.getValueAt(selectedRow, 0).toString();
+            boolean success = controller.updateRestaurantAdmin(
+                    restaurantId,
+                    adminId,
+                    name,
+                    loc,
+                    Integer.parseInt(cap)
+            );
+            if (success) {
+                if (adminId != null) {
+                    controller.setUserRoleToAdmin(adminId);
+                }
+                loadRestaurantManagementTable();
+                JOptionPane.showMessageDialog(this, "Update Succesfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update restaurant in database!");
+            }
+        } else {
+
+            boolean success = controller.addRestaurant(
+                    name,
+                    loc,
+                    Integer.parseInt(cap),
+                    adminId
+            );
+            if (success) {
+                if (adminId != null) {
+                    controller.setUserRoleToAdmin(adminId);
+                }
+                loadRestaurantManagementTable();
+                JOptionPane.showMessageDialog(this, "Restaurant added successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add restaurant to database.");
+            }
+        }
+        setDefaultFormState();
+        btnClearActionPerformed(null);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void deleteRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRestoBtnActionPerformed
+        int selectedRow = restoTableManagement.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select a restaurant to delete.");
+            return;
+        }
+
+        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
+        String restaurantId = model.getValueAt(selectedRow, 0).toString(); // 0 = Resto Id
+
+        DashboardController controller = new DashboardController();
+        boolean success = controller.deleteRestaurantById(restaurantId);
+
+        if (success) {
+            model.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "Restaurant deleted successfully.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to delete restaurant from database.");
+        }
+        setDefaultFormState();
+        btnClearActionPerformed(null);
+    }//GEN-LAST:event_deleteRestoBtnActionPerformed
+
+    private void editRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editRestoBtnActionPerformed
+        int selectedRow = restoTableManagement.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Select a row to edit.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
+
+        restoName.setText((String) model.getValueAt(selectedRow, 1));
+        location.setText((String) model.getValueAt(selectedRow, 2));
+        capacity.setText(String.valueOf(model.getValueAt(selectedRow, 3)));
+        Object adminObj = model.getValueAt(selectedRow, 4);
+        if (adminObj == null || adminObj.toString().trim().isEmpty() || adminObj.toString().contains("No Admin")) {
+            restoAdminDropdown.setSelectedIndex(0); // "None"
+        } else {
+            String adminName = adminObj.toString();
+            for (int i = 1; i < restoAdminDropdown.getItemCount(); i++) {
+                String item = (String) restoAdminDropdown.getItemAt(i);
+                if (item.startsWith(adminName + " (ID:")) {
+                    restoAdminDropdown.setSelectedIndex(i);
+                    break;
+                }
+            }
+        }
+        setEditFormState();
+    }//GEN-LAST:event_editRestoBtnActionPerformed
+
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
+        if (btnClose.getText().equals("Cancel")) {
+
+            setDefaultFormState();
+            btnClearActionPerformed(null);
+            restoTableManagement.clearSelection();
+        } else {
+
+        }
+    }//GEN-LAST:event_btnCloseActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        location.setText("");
+        capacity.setText("");
+        restoName.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void addRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRestoBtnActionPerformed
+        restoName.setText("");
+        location.setText("");
+        capacity.setText("");
+        restoAdminDropdown.setSelectedIndex(0);
+        restoTableManagement.clearSelection();
+        setEditFormState();
+    }//GEN-LAST:event_addRestoBtnActionPerformed
+
+    private void restoAdminDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoAdminDropdownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_restoAdminDropdownActionPerformed
+
     private void viewRestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRestoActionPerformed
         auditLog.setSelectedIndex(1);
     }//GEN-LAST:event_viewRestoActionPerformed
+
+    private void sendNotifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNotifActionPerformed
+        String message = notifMessage.getText().trim();
+        String category = (String) notifCategory.getSelectedItem();
+
+        if (message.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a notification message.");
+            return;
+        }
+
+        DashboardController controller = new DashboardController();
+        boolean success = controller.sendNotification(message, category);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Notification sent successfully!");
+            notifMessage.setText("");
+            notifCategory.setSelectedIndex(0);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to send notification.");
+        }
+    }//GEN-LAST:event_sendNotifActionPerformed
 
     private void setDefaultFormState() {
         restoName.setEnabled(false);
@@ -690,161 +938,16 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             restoAdminDropdown.addItem(user[1] + " (ID: " + user[0] + ")");
         }
     }
-    
+
     private void loadAuditLogs() {
-    DashboardController controller = new DashboardController();
-    List<String[]> logs = controller.getAllLogs();
-    DefaultTableModel model = (DefaultTableModel) auditTable.getModel();
-    model.setRowCount(0); // Clear existing rows
-    for (String[] log : logs) {
-        model.addRow(log);
+        DashboardController controller = new DashboardController();
+        List<String[]> logs = controller.getAllLogs();
+        DefaultTableModel model = (DefaultTableModel) auditTable.getModel();
+        model.setRowCount(0); // Clear existing rows
+        for (String[] log : logs) {
+            model.addRow(log);
+        }
     }
-}
-
-    private void addRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRestoBtnActionPerformed
-        restoName.setText("");
-        location.setText("");
-        capacity.setText("");
-        restoAdminDropdown.setSelectedIndex(0);
-        restoTableManagement.clearSelection();
-        setEditFormState();
-
-    }//GEN-LAST:event_addRestoBtnActionPerformed
-
-    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        location.setText("");
-        capacity.setText("");
-        restoName.setText("");
-    }//GEN-LAST:event_btnClearActionPerformed
-
-    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
-        if (btnClose.getText().equals("Cancel")) {
-          
-            setDefaultFormState();      
-            btnClearActionPerformed(null); 
-            restoTableManagement.clearSelection(); 
-        } else {
-            
-        }
-    }//GEN-LAST:event_btnCloseActionPerformed
-
-    private void editRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editRestoBtnActionPerformed
-        int selectedRow = restoTableManagement.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Select a row to edit.");
-            return;
-        }
-        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
-
-        restoName.setText((String) model.getValueAt(selectedRow, 1));
-        location.setText((String) model.getValueAt(selectedRow, 2));
-        capacity.setText(String.valueOf(model.getValueAt(selectedRow, 3)));
-        Object adminObj = model.getValueAt(selectedRow, 4);
-        if (adminObj == null || adminObj.toString().trim().isEmpty() || adminObj.toString().contains("No Admin")) {
-            restoAdminDropdown.setSelectedIndex(0); // "None"
-        } else {
-            String adminName = adminObj.toString();
-            for (int i = 1; i < restoAdminDropdown.getItemCount(); i++) {
-                String item = (String) restoAdminDropdown.getItemAt(i);
-                if (item.startsWith(adminName + " (ID:")) {
-                    restoAdminDropdown.setSelectedIndex(i);
-                    break;
-                }
-            }
-        }
-        setEditFormState();
-
-    }//GEN-LAST:event_editRestoBtnActionPerformed
-
-    private void deleteRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRestoBtnActionPerformed
-        int selectedRow = restoTableManagement.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select a restaurant to delete.");
-            return;
-        }
-
-        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
-        String restaurantId = model.getValueAt(selectedRow, 0).toString(); // 0 = Resto Id
-
-        DashboardController controller = new DashboardController();
-        boolean success = controller.deleteRestaurantById(restaurantId);
-
-        if (success) {
-            model.removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Restaurant deleted successfully.");
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to delete restaurant from database.");
-        }
-        setDefaultFormState();
-        btnClearActionPerformed(null);
-    }//GEN-LAST:event_deleteRestoBtnActionPerformed
-
-    private void restoAdminDropdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restoAdminDropdownActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_restoAdminDropdownActionPerformed
-
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
-        String name = restoName.getText().trim();
-        String loc = location.getText().trim();
-        String cap = capacity.getText().trim();
-        String selected = (String) restoAdminDropdown.getSelectedItem();
-        String adminId = null;
-
-        if (!"None".equals(selected)) {
-            int idx = selected.lastIndexOf("ID: ");
-            if (idx != -1) {
-                adminId = selected.substring(idx + 4, selected.length() - 1).trim();
-            }
-        }
-        int selectedRow = restoTableManagement.getSelectedRow();
-
-        if (name.isEmpty() || loc.isEmpty() || cap.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields.");
-            return;
-        }
-
-        DashboardController controller = new DashboardController();
-
-        if (selectedRow >= 0) {
-            String restaurantId = model.getValueAt(selectedRow, 0).toString();
-            boolean success = controller.updateRestaurantAdmin(
-                    restaurantId,
-                    adminId,
-                    name,
-                    loc,
-                    Integer.parseInt(cap)
-            );
-            if (success) {
-                if (adminId != null) {
-                    controller.setUserRoleToAdmin(adminId);
-                }
-                loadRestaurantManagementTable();
-                JOptionPane.showMessageDialog(this, "Update Succesfully!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update restaurant in database!");
-            }
-        } else {
-            
-            boolean success = controller.addRestaurant(
-                    name,
-                    loc,
-                    Integer.parseInt(cap),
-                    adminId
-            );
-            if (success) {
-                if (adminId != null) {
-                    controller.setUserRoleToAdmin(adminId);
-                }
-                loadRestaurantManagementTable();
-                JOptionPane.showMessageDialog(this, "Restaurant added successfully.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to add restaurant to database.");
-            }
-        }
-        setDefaultFormState();
-        btnClearActionPerformed(null);
-    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -930,19 +1033,23 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton deleteRestoBtn;
     private javax.swing.JButton editRestoBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -955,10 +1062,13 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField location;
+    private javax.swing.JComboBox<String> notifCategory;
+    private javax.swing.JTextField notifMessage;
     private javax.swing.JComboBox<String> restoAdminDropdown;
     private javax.swing.JTextField restoName;
     private javax.swing.JTable restoTable;
     private javax.swing.JTable restoTableManagement;
+    private javax.swing.JButton sendNotif;
     private javax.swing.JLabel totalNotifSent;
     private javax.swing.JLabel totalResto;
     private javax.swing.JLabel totalUser;
