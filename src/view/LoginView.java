@@ -204,10 +204,7 @@ private void setupEnterKeyBinding() {
                 "Login Successful", 
                 JOptionPane.INFORMATION_MESSAGE);
 
-            // You might want to store the logged-in user somewhere
-            // MainSession.setCurrentUser(user);
-
-            // Open dashboard
+           
            
              Main Main = new Main();
                         Main.setLocationRelativeTo(null);
