@@ -51,7 +51,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         auditTable.getColumnModel().getColumn(2).setMaxWidth(150);
         auditTable.getColumnModel().getColumn(2).setMinWidth(150);
         auditTable.getColumnModel().getColumn(2).setResizable(false);
-          auditTable.getColumnModel().getColumn(0).setResizable(false);
+        auditTable.getColumnModel().getColumn(0).setResizable(false);
         auditTable.getColumnModel().getColumn(1).setMaxWidth(150);
         auditTable.getColumnModel().getColumn(1).setMinWidth(150);
         auditTable.getColumnModel().getColumn(1).setResizable(false);
@@ -757,7 +757,12 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 if (adminId != null) {
                     controller.setUserRoleToAdmin(adminId);
                 }
+
+                controller.addAuditLog(1, "Updated Restaurant",
+                        "Updated restaurant ID: " + restaurantId + " to name: " + name
+                        + ", location: " + loc + ", capacity: " + cap);
                 loadRestaurantManagementTable();
+                loadAuditLogs();
                 JOptionPane.showMessageDialog(this, "Update Succesfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update restaurant in database!");
@@ -774,7 +779,11 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 if (adminId != null) {
                     controller.setUserRoleToAdmin(adminId);
                 }
+
+                //audit logs
+                controller.addAuditLog(1, "Created Restaurant", "Added new restaurant: " + name + " at " + loc + ", capacity: " + cap);
                 loadRestaurantManagementTable();
+                loadAuditLogs();
                 JOptionPane.showMessageDialog(this, "Restaurant added successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to add restaurant to database.");
@@ -798,7 +807,10 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         boolean success = controller.deleteRestaurantById(restaurantId);
 
         if (success) {
+            controller.addAuditLog(1, "Deleted Restaurant",
+                    "Deleted restaurant ID: " + restaurantId);
             model.removeRow(selectedRow);
+            loadAuditLogs();
             JOptionPane.showMessageDialog(this, "Restaurant deleted successfully.");
         } else {
             JOptionPane.showMessageDialog(this, "Failed to delete restaurant from database.");

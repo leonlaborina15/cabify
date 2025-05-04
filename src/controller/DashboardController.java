@@ -193,5 +193,18 @@ public class DashboardController {
         return false;
     }
 }
+    
+    public void addAuditLog(int userId, String action, String description) {
+    String sql = "INSERT INTO audit_log (user_id, action, description) VALUES (?, ?, ?)";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, userId);
+        stmt.setString(2, action);
+        stmt.setString(3, description);
+        stmt.executeUpdate();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
 }
