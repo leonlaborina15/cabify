@@ -1,4 +1,3 @@
-
 package view;
 
 import controller.DashboardController;
@@ -6,36 +5,62 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-
 
 public class SuperAdminDashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SuperAdminDashboard
-     */
+   
     public SuperAdminDashboard() {
         initComponents();
-          loadDashboardData();
-          loadRestaurantManagementTable();
-          populateRestoAdminDropdown();
-          
-          restoTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-          restoTable.getTableHeader().setOpaque(false);
-          restoTable.getTableHeader().setBackground(new Color(32, 136, 203));
-                  setDefaultFormState();
+        loadDashboardData();
+        loadRestaurantManagementTable();
+        populateRestoAdminDropdown();
+        
+        
+        Font headerFont = new Font("Segoe UI", Font.BOLD, 12);
+        Color headerColor = new Color(32, 136, 203);
 
-          
+            restoTable.getTableHeader().setFont(headerFont);
+            restoTable.getTableHeader().setOpaque(false);
+            restoTable.getTableHeader().setBackground(headerColor);
+            restoTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            restoTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            restoTable.getColumnModel().getColumn(0).setMinWidth(50);
+            restoTable.getColumnModel().getColumn(0).setResizable(false);
+            restoTable.getColumnModel().getColumn(3).setMaxWidth(100);
+            restoTable.getColumnModel().getColumn(3).setMinWidth(100);
+            restoTable.getColumnModel().getColumn(3).setResizable(false);
+
+            restoTableManagement.getTableHeader().setFont(headerFont);
+            restoTableManagement.getTableHeader().setOpaque(false);
+            restoTableManagement.getTableHeader().setBackground(headerColor);
+            restoTableManagement.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            restoTableManagement.getColumnModel().getColumn(0).setMaxWidth(50);
+            restoTableManagement.getColumnModel().getColumn(0).setMinWidth(50);
+            restoTableManagement.getColumnModel().getColumn(0).setResizable(false);
+            restoTableManagement.getColumnModel().getColumn(3).setMaxWidth(100);
+            restoTableManagement.getColumnModel().getColumn(3).setMinWidth(100);
+            restoTableManagement.getColumnModel().getColumn(3).setResizable(false);
+
+            auditTable.getTableHeader().setFont(headerFont);
+            auditTable.getTableHeader().setOpaque(false);
+            auditTable.getTableHeader().setBackground(headerColor);
+            auditTable.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+            auditTable.getColumnModel().getColumn(0).setMaxWidth(50);
+            auditTable.getColumnModel().getColumn(0).setMinWidth(50);
+            auditTable.getColumnModel().getColumn(0).setResizable(false);
+            auditTable.getColumnModel().getColumn(3).setMaxWidth(100);
+            auditTable.getColumnModel().getColumn(3).setMinWidth(100);
+            auditTable.getColumnModel().getColumn(3).setResizable(false);
+            
+
+        setDefaultFormState();
+        
+         loadAuditLogs();
+
     }
-        
-        
-    
-    
-    
-    
-    
- 
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -77,8 +102,12 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         editRestoBtn = new javax.swing.JButton();
         deleteRestoBtn = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        auditTable = new javax.swing.JTable();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,7 +120,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         totalResto.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         totalResto.setText("20");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Total Restaurants");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -99,25 +128,25 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(55, 55, 55)
+                .addGap(112, 112, 112)
                 .addComponent(totalResto)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(68, Short.MAX_VALUE)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(44, 44, 44)
                 .addComponent(totalResto, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Total Users");
 
         totalUser.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -128,25 +157,23 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(45, 45, 45)
                 .addComponent(totalUser)
-                .addGap(65, 65, 65)
+                .addGap(74, 74, 74)
                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(100, 100, 100))
+                .addGap(79, 79, 79))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(totalUser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(totalUser, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(22, 22, 22))
         );
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Notification Sent");
 
         totalNotifSent.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -157,25 +184,23 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
+                .addGap(45, 45, 45)
                 .addComponent(totalNotifSent)
-                .addGap(69, 69, 69)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(98, 98, 98))
+                .addGap(74, 74, 74)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
+                .addGap(79, 79, 79))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(totalNotifSent, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel3)))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(totalNotifSent, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        restoTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         restoTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -197,7 +222,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         });
         restoTable.setFocusable(false);
         restoTable.setRowHeight(25);
-        restoTable.setSelectionBackground(new java.awt.Color(0, 204, 204));
+        restoTable.setSelectionBackground(new java.awt.Color(34, 40, 49));
         restoTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
         restoTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(restoTable);
@@ -214,48 +239,47 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("RESTAURANT MANAGEMENT");
+        jLabel2.setText("DASHBOARD");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(245, 245, 245)
+                .addGap(148, 148, 148)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(viewResto, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jLabel1)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addGap(48, 48, 48)))
-                .addContainerGap(311, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1))))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel2)
-                .addGap(26, 26, 26)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(viewResto, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(viewResto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
@@ -263,6 +287,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(34, 40, 49));
 
+        restoTableManagement.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         restoTableManagement.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -290,7 +315,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         });
         restoTableManagement.setFocusable(false);
         restoTableManagement.setRowHeight(25);
-        restoTableManagement.setSelectionBackground(new java.awt.Color(0, 204, 204));
+        restoTableManagement.setSelectionBackground(new java.awt.Color(34, 40, 49));
         restoTableManagement.setSelectionForeground(new java.awt.Color(255, 255, 255));
         restoTableManagement.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(restoTableManagement);
@@ -340,21 +365,27 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel15))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(location, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(capacity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(restoAdminDropdown, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
+                                    .addGroup(jPanel8Layout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel15)
+                                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel14)
+                                                .addComponent(jLabel7))
+                                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(jLabel12)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(capacity, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(location)
+                                    .addComponent(restoAdminDropdown, 0, 183, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel8Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(restoName, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(63, 63, 63))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(75, Short.MAX_VALUE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -381,7 +412,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(restoAdminDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(147, 147, 147))
@@ -390,7 +421,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setToolTipText("");
 
+        addRestoBtn.setBackground(new java.awt.Color(118, 171, 174));
         addRestoBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        addRestoBtn.setForeground(new java.awt.Color(255, 255, 255));
         addRestoBtn.setText("Add New");
         addRestoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -398,7 +431,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnClear.setBackground(new java.awt.Color(49, 54, 63));
         btnClear.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnClear.setForeground(new java.awt.Color(255, 255, 255));
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -406,7 +441,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnClose.setBackground(new java.awt.Color(49, 54, 63));
         btnClose.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Close");
         btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -414,7 +451,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        editRestoBtn.setBackground(new java.awt.Color(118, 171, 174));
         editRestoBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        editRestoBtn.setForeground(new java.awt.Color(255, 255, 255));
         editRestoBtn.setText("Edit");
         editRestoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -422,7 +461,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        deleteRestoBtn.setBackground(new java.awt.Color(255, 0, 0));
         deleteRestoBtn.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        deleteRestoBtn.setForeground(new java.awt.Color(255, 255, 255));
         deleteRestoBtn.setText("Delete");
         deleteRestoBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -430,7 +471,9 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
 
+        btnSave.setBackground(new java.awt.Color(118, 171, 174));
         btnSave.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btnSave.setForeground(new java.awt.Color(255, 255, 255));
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,27 +492,28 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                     .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editRestoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
+                    .addComponent(editRestoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(deleteRestoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteRestoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addRestoBtn)
-                    .addComponent(editRestoBtn)
-                    .addComponent(deleteRestoBtn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClear)
-                    .addComponent(btnClose)
-                    .addComponent(btnSave))
+                .addContainerGap()
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addRestoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(deleteRestoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(editRestoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnClose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -480,52 +524,105 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(70, 70, 70)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         auditLog.addTab("Manage Restaurant", jPanel3);
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1193, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
-        );
+        jPanel7.setBackground(new java.awt.Color(34, 40, 49));
 
-        auditLog.addTab("Notifications", jPanel6);
+        auditTable.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        auditTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Log_Id", "Performed By", "Action", "Description", "Date"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        auditTable.setRowHeight(25);
+        auditTable.setRowSelectionAllowed(false);
+        auditTable.setSelectionBackground(new java.awt.Color(34, 40, 49));
+        jScrollPane3.setViewportView(auditTable);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("AUDIT LOGS");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1193, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 902, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(156, 156, 156))
         );
 
         auditLog.addTab("Audit Logs", jPanel7);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1266, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 657, Short.MAX_VALUE)
+        );
+
+        auditLog.addTab("Notifications", jPanel6);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("DASHBOARD");
+        auditLog.addTab("tab5", jLabel8);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -535,17 +632,17 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(auditLog)
+            .addComponent(auditLog, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewRestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRestoActionPerformed
-        auditLog.setSelectedIndex(1);       
+        auditLog.setSelectedIndex(1);
     }//GEN-LAST:event_viewRestoActionPerformed
-   
-     private void setDefaultFormState() {
+
+    private void setDefaultFormState() {
         restoName.setEnabled(false);
         location.setEnabled(false);
         capacity.setEnabled(false);
@@ -582,25 +679,35 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     }
 
     private void populateRestoAdminDropdown() {
-    restoAdminDropdown.removeAllItems();
-    restoAdminDropdown.addItem("None"); 
+        restoAdminDropdown.removeAllItems();
+        restoAdminDropdown.addItem("None");
 
-    DashboardController dashboardController = new DashboardController();
-    List<String[]> users = dashboardController.getAllUsers(); 
+        DashboardController dashboardController = new DashboardController();
+        List<String[]> users = dashboardController.getAllUsers();
 
-    for (String[] user : users) {
-        // e.g. Bob Smith (ID: 12)
-        restoAdminDropdown.addItem(user[1] + " (ID: " + user[0] + ")");
+        for (String[] user : users) {
+            // e.g. Bob Smith (ID: 12)
+            restoAdminDropdown.addItem(user[1] + " (ID: " + user[0] + ")");
+        }
+    }
+    
+    private void loadAuditLogs() {
+    DashboardController controller = new DashboardController();
+    List<String[]> logs = controller.getAllLogs();
+    DefaultTableModel model = (DefaultTableModel) auditTable.getModel();
+    model.setRowCount(0); // Clear existing rows
+    for (String[] log : logs) {
+        model.addRow(log);
     }
 }
-    
+
     private void addRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRestoBtnActionPerformed
-            restoName.setText("");
-            location.setText("");
-            capacity.setText("");
-            restoAdminDropdown.setSelectedIndex(0);
-            restoTableManagement.clearSelection();
-             setEditFormState();
+        restoName.setText("");
+        location.setText("");
+        capacity.setText("");
+        restoAdminDropdown.setSelectedIndex(0);
+        restoTableManagement.clearSelection();
+        setEditFormState();
 
     }//GEN-LAST:event_addRestoBtnActionPerformed
 
@@ -609,32 +716,30 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         capacity.setText("");
         restoName.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
-    
+
     private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
- if (btnClose.getText().equals("Cancel")) {
-        // User pressed "Cancel" during Add/Edit
-        setDefaultFormState();      // Reset buttons and fields
-        btnClearActionPerformed(null); // Clear all fields
-        restoTableManagement.clearSelection(); // Unselect any row
-    } else {
-        // Close the form/window (optional)
-        // this.dispose();
-        // Or simply do nothing if you want to keep the window open
-    }      
+        if (btnClose.getText().equals("Cancel")) {
+          
+            setDefaultFormState();      
+            btnClearActionPerformed(null); 
+            restoTableManagement.clearSelection(); 
+        } else {
+            
+        }
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void editRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editRestoBtnActionPerformed
-          int selectedRow = restoTableManagement.getSelectedRow();
+        int selectedRow = restoTableManagement.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Select a row to edit.");
             return;
         }
         DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
 
-        restoName.setText((String) model.getValueAt(selectedRow, 1));       
-        location.setText((String) model.getValueAt(selectedRow, 2));        
-        capacity.setText(String.valueOf(model.getValueAt(selectedRow, 3))); 
-        Object adminObj = model.getValueAt(selectedRow, 4);                 
+        restoName.setText((String) model.getValueAt(selectedRow, 1));
+        location.setText((String) model.getValueAt(selectedRow, 2));
+        capacity.setText(String.valueOf(model.getValueAt(selectedRow, 3)));
+        Object adminObj = model.getValueAt(selectedRow, 4);
         if (adminObj == null || adminObj.toString().trim().isEmpty() || adminObj.toString().contains("No Admin")) {
             restoAdminDropdown.setSelectedIndex(0); // "None"
         } else {
@@ -648,11 +753,11 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         }
         setEditFormState();
-       
+
     }//GEN-LAST:event_editRestoBtnActionPerformed
 
     private void deleteRestoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRestoBtnActionPerformed
-                  int selectedRow = restoTableManagement.getSelectedRow();
+        int selectedRow = restoTableManagement.getSelectedRow();
         if (selectedRow < 0) {
             JOptionPane.showMessageDialog(this, "Please select a restaurant to delete.");
             return;
@@ -679,7 +784,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_restoAdminDropdownActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-            DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
+        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
         String name = restoName.getText().trim();
         String loc = location.getText().trim();
         String cap = capacity.getText().trim();
@@ -702,30 +807,35 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         DashboardController controller = new DashboardController();
 
         if (selectedRow >= 0) {
-            // EDIT/UPDATE EXISTING
             String restaurantId = model.getValueAt(selectedRow, 0).toString();
             boolean success = controller.updateRestaurantAdmin(
-                restaurantId,
-                adminId,
-                name,
-                loc,
-                Integer.parseInt(cap)
+                    restaurantId,
+                    adminId,
+                    name,
+                    loc,
+                    Integer.parseInt(cap)
             );
             if (success) {
+                if (adminId != null) {
+                    controller.setUserRoleToAdmin(adminId);
+                }
                 loadRestaurantManagementTable();
-                JOptionPane.showMessageDialog(this, "Restaurant updated in database!");
+                JOptionPane.showMessageDialog(this, "Update Succesfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update restaurant in database!");
             }
         } else {
-            // ADD NEW
+            
             boolean success = controller.addRestaurant(
-                name,
-                loc,
-                Integer.parseInt(cap),
-                adminId
+                    name,
+                    loc,
+                    Integer.parseInt(cap),
+                    adminId
             );
             if (success) {
+                if (adminId != null) {
+                    controller.setUserRoleToAdmin(adminId);
+                }
                 loadRestaurantManagementTable();
                 JOptionPane.showMessageDialog(this, "Restaurant added successfully.");
             } else {
@@ -770,48 +880,49 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
             }
         });
     }
-        
+
     private void loadDashboardData() {
-    try {
-        DashboardController dashboardController = new DashboardController();
+        try {
+            DashboardController dashboardController = new DashboardController();
 
-        int totalUsers = dashboardController.getTotalUsers();
-        int totalRestaurants = dashboardController.getTotalRestaurants();
+            int totalUsers = dashboardController.getTotalUsers();
+            int totalRestaurants = dashboardController.getTotalRestaurants();
 
-        totalUser.setText(String.valueOf(totalUsers));
-        totalResto.setText(String.valueOf(totalRestaurants));
+            totalUser.setText(String.valueOf(totalUsers));
+            totalResto.setText(String.valueOf(totalRestaurants));
 
-        List<String[]> restaurantData = dashboardController.getAllRestaurants();
-        DefaultTableModel model = (DefaultTableModel) restoTable.getModel();
-        model.setRowCount(0); // Clear existing rows
-        for (String[] resto : restaurantData) {
-            model.addRow(resto);
+            List<String[]> restaurantData = dashboardController.getAllRestaurants();
+            DefaultTableModel model = (DefaultTableModel) restoTable.getModel();
+            model.setRowCount(0); // Clear existing rows
+            for (String[] resto : restaurantData) {
+                model.addRow(resto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Failed to load dashboard data.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Failed to load dashboard data.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-}
-    
+
     private void loadRestaurantManagementTable() {
-    try {
-        DashboardController dashboardController = new DashboardController();
-        List<String[]> restaurantData = dashboardController.getAllRestaurants();
-        DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
-        model.setRowCount(0);
-        for (String[] resto : restaurantData) {
-            
-            model.addRow(resto);
+        try {
+            DashboardController dashboardController = new DashboardController();
+            List<String[]> restaurantData = dashboardController.getAllRestaurants();
+            DefaultTableModel model = (DefaultTableModel) restoTableManagement.getModel();
+            model.setRowCount(0);
+            for (String[] resto : restaurantData) {
+
+                model.addRow(resto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Failed to load restaurant data.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        javax.swing.JOptionPane.showMessageDialog(this, "Failed to load restaurant data.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addRestoBtn;
     private javax.swing.JTabbedPane auditLog;
+    private javax.swing.JTable auditTable;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnSave;
@@ -829,6 +940,8 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -840,6 +953,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField location;
     private javax.swing.JComboBox<String> restoAdminDropdown;
     private javax.swing.JTextField restoName;

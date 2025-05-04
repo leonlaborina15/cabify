@@ -155,4 +155,47 @@ public class DashboardController {
             return false;
         }
     }
+    
+    public boolean setUserRoleToAdmin(String userId) {
+    String sql = "UPDATE user SET role = 'Resto Admin' WHERE user_id = ?";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, userId);
+        int affectedRows = stmt.executeUpdate();
+        return affectedRows > 0;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+    
+    public List<String[]> getAllLogs() {
+    List<String[]> logs = new ArrayList<>();
+    String sql = "SELECT l.log_id, u.name AS user_name, l.action, l.description, l.created_at " +
+                 "FROM audit_log l " +
+                 "JOIN user u ON l.user_id = u.user_id " +
+                 "ORDER BY l.created_at DESC";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+            String logId = rs.getString("log_id");
+            String userName = rs.getString("user_name");
+            String action = rs.getString("action");
+            String desc = rs.getString("description");
+            String createdAt = rs.getString("created_at");
+            logs.add(new String[]{logId, userName, action, desc, createdAt});
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return logs;
+}
+    
+    
+    
+    
+    
+    
+    
 }
