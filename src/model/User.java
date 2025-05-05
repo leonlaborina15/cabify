@@ -10,22 +10,30 @@ public class User {
     private String role;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+    private Integer restaurantId;
 
-    // Full constructor
-    public User(int userId, String name, String email, String password, 
-                String role, Timestamp createdAt, Timestamp updatedAt) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+    public User(int userId, String name, String email, String password, String role, Timestamp createdAt, Timestamp updatedAt, Integer restaurantId) {
+    this.userId = userId;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.restaurantId = restaurantId;
+}
 
     // Default constructor if needed
     public User() {
         // Initialize with default values if needed
+    }
+    
+    public Integer getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Integer restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     // Getters and Setters
@@ -85,14 +93,14 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    // Optional: Override toString() for debugging
-    @Override
+   @Override
     public String toString() {
         return "User{" +
                 "userId=" + userId +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
+                ", restaurantId=" + restaurantId +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

@@ -4,17 +4,30 @@
  */
 package view;
 
+import controller.RestaurantController;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Restaurant;
+import model.Session;
+
 /**
  *
  * @author acer
  */
 public class RestoAdminView extends javax.swing.JFrame {
-
+        private int maxCapacity = 0;
+        private int currentCapacity = 0;
+        private RestaurantController restaurantController = new RestaurantController();
+        private Restaurant currentRestaurant;
     /**
      * Creates new form RestoAdminView
      */
     public RestoAdminView() {
-        initComponents();
+          initComponents();
+    loadRestaurantData();
+    initializeCapacityBar();
+        
     }
 
     /**
@@ -26,21 +39,178 @@ public class RestoAdminView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabPanne = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        restoName = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        capacityBar = new javax.swing.JProgressBar();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        updateCapacity = new javax.swing.JButton();
+        toggleStatus = new javax.swing.JToggleButton();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(34, 40, 49));
+
+        restoName.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        restoName.setForeground(new java.awt.Color(255, 255, 255));
+        restoName.setText("BONCHON");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel2.setText("Crowd Capacity");
+
+        capacityBar.setBackground(new java.awt.Color(49, 54, 63));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(61, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(56, 56, 56)
+                .addComponent(capacityBar, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(capacityBar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel2)))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("10 minutes");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Wait Time:");
+
+        updateCapacity.setBackground(new java.awt.Color(118, 171, 174));
+        updateCapacity.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        updateCapacity.setForeground(new java.awt.Color(255, 255, 255));
+        updateCapacity.setText("UPDATE CAPAVITY");
+        updateCapacity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateCapacityActionPerformed(evt);
+            }
+        });
+
+        toggleStatus.setText("OPEN,");
+        toggleStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                toggleStatusActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(restoName)
+                        .addGap(597, 597, 597))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(updateCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(561, 561, 561))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(214, 214, 214)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel3)
+                        .addGap(372, 372, 372)
+                        .addComponent(toggleStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 209, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(restoName)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(66, 66, 66))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(toggleStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(75, 75, 75)))
+                .addComponent(updateCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
+        );
+
+        tabPanne.addTab("Home", jPanel1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1460, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 663, Short.MAX_VALUE)
+        );
+
+        tabPanne.addTab("Capacity Management", jPanel2);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1460, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 663, Short.MAX_VALUE)
+        );
+
+        tabPanne.addTab("Notifications", jPanel3);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(tabPanne)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(tabPanne)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void updateCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCapacityActionPerformed
+        tabPanne.setSelectedIndex(1);
+    }//GEN-LAST:event_updateCapacityActionPerformed
+
+    private void toggleStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleStatusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_toggleStatusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +248,53 @@ public class RestoAdminView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar capacityBar;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel restoName;
+    private javax.swing.JTabbedPane tabPanne;
+    private javax.swing.JToggleButton toggleStatus;
+    private javax.swing.JButton updateCapacity;
     // End of variables declaration//GEN-END:variables
+
+private void loadRestaurantData() {
+    int restoId = Session.getInstance().getRestaurantId();
+            try {
+                currentRestaurant = restaurantController.getRestaurantById(restoId);
+            } catch (Exception ex) {
+                Logger.getLogger(RestoAdminView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    if (currentRestaurant != null) {
+        maxCapacity = currentRestaurant.getMaxCapacity();
+        currentCapacity = currentRestaurant.getCurrentCapacity();
+        restoName.setText(currentRestaurant.getName());
+    } else {
+        maxCapacity = 100;
+        currentCapacity = 0;
+        restoName.setText("Unknown");
+        JOptionPane.showMessageDialog(this, "Unable to load restaurant data.");
+    }
+}
+
+  private void initializeCapacityBar() {
+    if (maxCapacity > 0) {
+        int percent = (int) Math.round((currentCapacity * 100.0) / maxCapacity);
+        capacityBar.setMinimum(0);
+        capacityBar.setMaximum(100);
+        capacityBar.setValue(percent);
+        capacityBar.setStringPainted(true);
+        capacityBar.setString(percent + "%");
+    } else {
+        capacityBar.setMinimum(0);
+        capacityBar.setMaximum(100);
+        capacityBar.setValue(0);
+        capacityBar.setStringPainted(true);
+        capacityBar.setString("0%");
+    }
+}
 }

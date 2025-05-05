@@ -54,6 +54,7 @@ public class UserController {
                 if (rowsAffected > 0) {
                     try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                         if (generatedKeys.next()) {
+                            Integer restaurantId = null;
                             return Optional.of(new User(
                                 generatedKeys.getInt(1),
                                 name,
@@ -61,7 +62,8 @@ public class UserController {
                                 password,
                                 "USER",
                                 currentTime,
-                                currentTime
+                                currentTime,
+                                    restaurantId
                             ));
                         }
                     }
@@ -72,41 +74,46 @@ public class UserController {
     }
 
     /**
-     * Authenticates a user by verifying email and password.
      * 
      * @param email User's email address
      * @param password User's password
      * @return Optional containing the authenticated User if successful, empty otherwise
      * @throws SQLException if a database error occurs
      */
-    public Optional<User> authenticate(String email, String password) throws SQLException, Exception {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
-                
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, email.toLowerCase().trim());
-                stmt.setString(2, password);
-                
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        User user = new User(
-                            rs.getInt("user_id"),
-                            rs.getString("name"),
-                            rs.getString("email"),
-                            rs.getString("password"),
-                            rs.getString("role"),
-                            rs.getTimestamp("created_at"),
-                            rs.getTimestamp("updated_at")
-                        );
-                        updateLastLogin(email);
-                        return Optional.of(user);
-                    }
+        public Optional<User> authenticate(String email, String password) throws SQLException, Exception {
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql = """
+            SELECT u.*, r.restaurant_id
+            FROM user u
+            LEFT JOIN restaurant r ON r.admin_id = u.user_id
+            WHERE u.email = ? AND u.password = ?
+        """;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email.toLowerCase().trim());
+            stmt.setString(2, password);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Integer restaurantId = rs.getObject("restaurant_id") != null ? rs.getInt("restaurant_id") : null;
+
+                    User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at"),
+                        restaurantId // Pass the restaurantId to the User object (update User class if needed)
+                    );
+                    updateLastLogin(email);
+                    return Optional.of(user);
                 }
             }
         }
-        return Optional.empty();
     }
-
+    return Optional.empty();
+}
     /**
      * Updates user password.
      * 

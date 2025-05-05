@@ -66,7 +66,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        auditLog = new javax.swing.JTabbedPane();
+        tabPanne = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -114,7 +114,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         notifCategory = new javax.swing.JComboBox<>();
         sendNotif = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -247,7 +246,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("DASHBOARD");
+        jLabel2.setText("SUPER ADMIN DASHBOARD");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -291,7 +290,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        auditLog.addTab("Home", jPanel2);
+        tabPanne.addTab("Home", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -551,7 +550,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addContainerGap(143, Short.MAX_VALUE))
         );
 
-        auditLog.addTab("Manage Restaurant", jPanel3);
+        tabPanne.addTab("Manage Restaurant", jPanel3);
 
         jPanel7.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -612,7 +611,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addGap(156, 156, 156))
         );
 
-        auditLog.addTab("Audit Logs", jPanel7);
+        tabPanne.addTab("Audit Logs", jPanel7);
 
         jPanel6.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -666,10 +665,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("AUDIT LOGS");
-
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("SEND NOTIFICATIONS");
@@ -684,11 +679,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(274, Short.MAX_VALUE))
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(554, 554, 554)
-                    .addComponent(jLabel10)
-                    .addContainerGap(554, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -698,24 +688,19 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
-            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel6Layout.createSequentialGroup()
-                    .addGap(304, 304, 304)
-                    .addComponent(jLabel10)
-                    .addContainerGap(305, Short.MAX_VALUE)))
         );
 
-        auditLog.addTab("Notifications", jPanel6);
+        tabPanne.addTab("Notifications", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(auditLog)
+            .addComponent(tabPanne)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(auditLog, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(tabPanne, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -892,7 +877,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_restoAdminDropdownActionPerformed
 
     private void viewRestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewRestoActionPerformed
-        auditLog.setSelectedIndex(1);
+        tabPanne.setSelectedIndex(1);
     }//GEN-LAST:event_viewRestoActionPerformed
 
     private void sendNotifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNotifActionPerformed
@@ -908,9 +893,15 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
         boolean success = controller.sendNotification(message, category);
 
         if (success) {
+            
+              controller.addAuditLog(1, "Sent Notification",
+            "Notification sent: " + message + " (Category: " + category + ")");
+              
             JOptionPane.showMessageDialog(this, "Notification sent successfully!");
             notifMessage.setText("");
             notifCategory.setSelectedIndex(0);
+            loadAuditLogs();
+
 
         } else {
             JOptionPane.showMessageDialog(this, "Failed to send notification.");
@@ -1023,7 +1014,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
             List<String[]> restaurantData = dashboardController.getAllRestaurants();
             DefaultTableModel model = (DefaultTableModel) restoTable.getModel();
-            model.setRowCount(0); // Clear existing rows
+            model.setRowCount(0); 
             for (String[] resto : restaurantData) {
                 model.addRow(resto);
             }
@@ -1051,7 +1042,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addRestoBtn;
-    private javax.swing.JTabbedPane auditLog;
     private javax.swing.JTable auditTable;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnClose;
@@ -1060,7 +1050,6 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JButton deleteRestoBtn;
     private javax.swing.JButton editRestoBtn;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1096,6 +1085,7 @@ public class SuperAdminDashboard extends javax.swing.JFrame {
     private javax.swing.JTable restoTable;
     private javax.swing.JTable restoTableManagement;
     private javax.swing.JButton sendNotif;
+    private javax.swing.JTabbedPane tabPanne;
     private javax.swing.JLabel totalNotifSent;
     private javax.swing.JLabel totalResto;
     private javax.swing.JLabel totalUser;

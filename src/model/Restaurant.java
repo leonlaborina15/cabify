@@ -1,9 +1,9 @@
-
 package model;
 
+import java.sql.Timestamp;
 
 public class Restaurant {
-     private int restaurantId;
+    private int restaurantId;
     private String name;
     private String location;
     private int maxCapacity;
@@ -14,7 +14,12 @@ public class Restaurant {
     private Timestamp updatedAt;
     private double crowdPercentage;
     private int waitTime;
+    private int id;
 
+    // Default constructor
+    public Restaurant() {}
+
+    // Full constructor
     public Restaurant(int restaurantId, String name, String location, int maxCapacity, int currentCapacity, String status, String gpsCoordinates, Timestamp createdAt, Timestamp updatedAt, double crowdPercentage, int waitTime) {
         this.restaurantId = restaurantId;
         this.name = name;
@@ -118,4 +123,7 @@ public class Restaurant {
         this.waitTime = waitTime;
     }
     
+    public void setId(int restaurantId) {
+    this.restaurantId = id;
+    }
 }

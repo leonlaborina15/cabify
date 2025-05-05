@@ -9,7 +9,6 @@ import model.DatabaseConnection;
 
 public class DashboardController {
 
-    // Get the total number of users
     public int getTotalUsers() {
         int totalUsers = 0;
         String sql = "SELECT COUNT(*) AS total FROM user";
@@ -23,7 +22,6 @@ public class DashboardController {
         return totalUsers;
     }
 
-    // Get the total number of restaurants
     public int getTotalRestaurants() {
         int totalRestaurants = 0;
         String sql = "SELECT COUNT(*) AS total FROM restaurant";
@@ -37,7 +35,6 @@ public class DashboardController {
         return totalRestaurants;
     }
 
-    // Get all restaurants with admin name (or "No Admin Assigned" if none)
     public List<String[]> getAllRestaurants() {
         List<String[]> restaurants = new ArrayList<>();
         String sql = "SELECT r.restaurant_id, r.name AS restaurant_name, r.location, r.max_capacity, "
@@ -59,7 +56,6 @@ public class DashboardController {
         return restaurants;
     }
 
-    // Get all users (for populating dropdown)
     public List<String[]> getAllUsers() {
         List<String[]> users = new ArrayList<>();
         String sql = "SELECT user_id, name FROM user";
@@ -75,7 +71,6 @@ public class DashboardController {
         return users;
     }
 
-    // Get all admins (not currently used, but can be useful)
     public List<String> getAllAdmins() {
         List<String> admins = new ArrayList<>();
         String sql = "SELECT name FROM user WHERE role = 'Resto Admin'";
@@ -89,7 +84,6 @@ public class DashboardController {
         return admins;
     }
 
-    // Delete a restaurant by its ID
     public boolean deleteRestaurantById(String restaurantId) {
         String sql = "DELETE FROM restaurant WHERE restaurant_id = ?";
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -102,7 +96,6 @@ public class DashboardController {
         }
     }
 
-    // Update restaurant (including admin assignment)
     public boolean updateRestaurantAdmin(String restaurantId, String adminId, String name, String location, int capacity) {
         String sql = "UPDATE restaurant SET name = ?, location = ?, max_capacity = ?, admin_id = ? WHERE restaurant_id = ?";
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -123,7 +116,6 @@ public class DashboardController {
         }
     }
 
-    // Add restaurant (including admin assignment)
     public boolean addRestaurant(String name, String location, int capacity, String adminId) {
         String sql = "INSERT INTO restaurant (name, location, max_capacity, admin_id) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -175,36 +167,35 @@ public class DashboardController {
         }
         return logs;
     }
-    
+
     public boolean sendNotification(String message, String category) {
-    String sql = "INSERT INTO notification (user_id, restaurant_id, message, notification_type, status, created_at) " +
-                 "VALUES (?, ?, ?, ?, ?, NOW())";
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setNull(1, java.sql.Types.INTEGER);
-        stmt.setNull(2, java.sql.Types.INTEGER); 
-        stmt.setString(3, message);
-        stmt.setString(4, category);
-        stmt.setString(5, "Pending");
-        int rows = stmt.executeUpdate();
-        return rows > 0;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+        String sql = "INSERT INTO notification (user_id, restaurant_id, message, notification_type, status, created_at) "
+                + "VALUES (?, ?, ?, ?, ?, NOW())";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setNull(1, java.sql.Types.INTEGER);
+            stmt.setNull(2, java.sql.Types.INTEGER);
+            stmt.setString(3, message);
+            stmt.setString(4, category);
+            stmt.setString(5, "Pending");
+            int rows = stmt.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
-    
+
     public void addAuditLog(int userId, String action, String description) {
-    String sql = "INSERT INTO audit_log (user_id, action, description) VALUES (?, ?, ?)";
-    try (Connection conn = DatabaseConnection.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, userId);
-        stmt.setString(2, action);
-        stmt.setString(3, description);
-        stmt.executeUpdate();
-    } catch (Exception e) {
-        e.printStackTrace();
+        String sql = "INSERT INTO audit_log (user_id, action, description) VALUES (?, ?, ?)";
+        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, action);
+            stmt.setString(3, description);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-}
 
 }

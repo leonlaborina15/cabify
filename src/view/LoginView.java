@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
 
 import controller.UserController;
@@ -11,11 +8,16 @@ import model.User;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Session;
+import view.RestoAdminView;
+import view.SuperAdminDashboard;
+import view.UserView;
 
 /**
  *
  * @author acer
  */
+
 public class LoginView extends javax.swing.JFrame {
 
     /**
@@ -177,17 +179,15 @@ private void setupEnterKeyBinding() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInActionPerformed
-        String emailInput = email.getText().trim();
-    String passwordInput = new String(pass.getPassword());
+      String emailInput = email.getText().trim();
+    String passwordInput = new String(pass.getPassword()).trim();
 
-    // Clear password field for security
-    pass.setText("");
+    pass.setText(""); // Clear password field
 
-    // Validate inputs
     if (emailInput.isEmpty() || passwordInput.isEmpty()) {
-        JOptionPane.showMessageDialog(this, 
-            "Both email and password are required!", 
-            "Error", 
+        JOptionPane.showMessageDialog(this,
+            "Both email and password are required!",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         return;
     }
@@ -198,41 +198,61 @@ private void setupEnterKeyBinding() {
 
         if (authenticatedUser.isPresent()) {
             User user = authenticatedUser.get();
-            
-            JOptionPane.showMessageDialog(this, 
-                "Welcome back, " + user.getName() + "!", 
-                "Login Successful", 
+
+            // Session: use the restaurantId from User (may be null for Super Admins, etc)
+            Session.getInstance().login(
+                user.getUserId(),
+                user.getRestaurantId() != null ? user.getRestaurantId() : 0,
+                user.getName()
+            );
+
+            JOptionPane.showMessageDialog(this,
+                "Welcome back, " + user.getName() + "!",
+                "Login Successful",
                 JOptionPane.INFORMATION_MESSAGE);
 
-           
-           
-             Main Main = new Main();
-                        Main.setLocationRelativeTo(null);
-                        Main.setVisible(true);
-                        this.dispose();
-            
+            // Role-based routing (adjust role strings as per your DB!)
+            switch (user.getRole().toLowerCase()) {
+                case "super admin":
+                    new SuperAdminDashboard().setVisible(true);
+                    break;
+                case "resto admin":
+                    new RestoAdminView().setVisible(true);
+                    break;
+                case "user":
+                    new UserView().setVisible(true);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(this,
+                        "Unknown user role: " + user.getRole(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+
             this.dispose(); // Close login window
+
         } else {
-            JOptionPane.showMessageDialog(this, 
-                "Invalid email or password.", 
-                "Login Failed", 
+            JOptionPane.showMessageDialog(this,
+                "Invalid email or password.",
+                "Login Failed",
                 JOptionPane.ERROR_MESSAGE);
         }
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, 
-            "Database error occurred. Please try again.", 
-            "Error", 
+        JOptionPane.showMessageDialog(this,
+            "Database error occurred. Please try again.",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         Logger.getLogger(LoginView.class.getName())
             .log(Level.SEVERE, "Database error during login", ex);
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, 
-            "An unexpected error occurred.", 
-            "Error", 
+        JOptionPane.showMessageDialog(this,
+            "An unexpected error occurred.",
+            "Error",
             JOptionPane.ERROR_MESSAGE);
         Logger.getLogger(LoginView.class.getName())
             .log(Level.SEVERE, "Unexpected error during login", ex);
     }
+    
     }//GEN-LAST:event_logInActionPerformed
 
     private void emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailActionPerformed
@@ -243,36 +263,36 @@ private void setupEnterKeyBinding() {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /* Set the Nimbus look and feel */
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginView().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(LoginView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    /* Create and display the form */
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new LoginView().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Username;
