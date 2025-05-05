@@ -20,6 +20,7 @@ public class RestoAdminView extends javax.swing.JFrame {
         private int currentCapacity = 0;
         private RestaurantController restaurantController = new RestaurantController();
         private Restaurant currentRestaurant;
+    private int restaurantId;
     /**
      * Creates new form RestoAdminView
      */
@@ -209,8 +210,30 @@ public class RestoAdminView extends javax.swing.JFrame {
     }//GEN-LAST:event_updateCapacityActionPerformed
 
     private void toggleStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleStatusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_toggleStatusActionPerformed
+       int restaurantId = Session.getInstance().getRestaurantId();
+
+    String newStatus = toggleStatus.isSelected() ? "Open" : "Closed";
+    toggleStatus.setText(newStatus);
+    System.out.println("Updating restaurantId: " + restaurantId + " to status: " + newStatus);
+        
+    System.out.println("restaurantIint restaurantId = this.restaurantId; \n" +
+"d: " + restaurantId);
+    System.out.println("newStatus: " + newStatus);
+    
+    try {
+        RestaurantController rc = new RestaurantController();
+        boolean success = rc.updateStatus(restaurantId, newStatus);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Status updated to " + newStatus, "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update status.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Failed to update status.\n" + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+
+        }//GEN-LAST:event_toggleStatusActionPerformed
 
     /**
      * @param args the command line arguments

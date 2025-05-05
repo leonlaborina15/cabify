@@ -47,4 +47,20 @@ public class RestaurantController {
             return false;
         }
     }
+public boolean updateStatus(int restaurantId, String status) throws Exception {
+    String sql = "UPDATE restaurant SET status = ? WHERE restaurant_id = ?";
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, status);
+        stmt.setInt(2, restaurantId);
+        int rows = stmt.executeUpdate();
+        System.out.println("Rows affected: " + rows);
+        return rows > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+    
+
 }
