@@ -33,20 +33,21 @@ public class RestaurantController {
         return resto;
     }
 
-    public boolean updateCurrentCapacity(int restaurantId, int newCapacity) throws Exception {
-        try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "UPDATE restaurant SET current_capacity = ? WHERE restaurant_id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, newCapacity);
-                stmt.setInt(2, restaurantId);
-                int affected = stmt.executeUpdate();
-                return affected > 0;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
+public boolean updateCurrentCapacity(int restaurantId, int newCapacity) throws Exception {
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql = "UPDATE restaurant SET current_capacity = ? WHERE restaurant_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, newCapacity);
+            stmt.setInt(2, restaurantId);
+            int affected = stmt.executeUpdate();
+            System.out.println("Rows affected: " + affected);
+            return affected > 0;
         }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        return false;
     }
+}
 public boolean updateStatus(int restaurantId, String status) throws Exception {
     String sql = "UPDATE restaurant SET status = ? WHERE restaurant_id = ?";
     try (Connection conn = DatabaseConnection.getConnection();

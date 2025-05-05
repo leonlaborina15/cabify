@@ -124,6 +124,6 @@ public class Restaurant {
     }
     
     public void setId(int restaurantId) {
-    this.restaurantId = id;
+    this.restaurantId = restaurantId;
     }
 }
