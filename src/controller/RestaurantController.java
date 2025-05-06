@@ -28,7 +28,7 @@ public class RestaurantController {
                         resto.setUpdatedAt(rs.getTimestamp("updated_at"));
                         resto.setCrowdPercentage(rs.getDouble("crowd_percentage"));
                         resto.setWaitTime(rs.getInt("wait_time"));
-                        resto.setDistanceKm(rs.getDouble("distance_km")); // <-- fetch distance
+                        resto.setDistanceKm(rs.getDouble("distance_km")); 
                     }
                 }
             }

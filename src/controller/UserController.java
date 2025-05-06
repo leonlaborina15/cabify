@@ -18,16 +18,7 @@ public class UserController {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
     private static final int MIN_PASSWORD_LENGTH = 8;
 
-    /**
-     * Registers a new user in the database with input validation.
-     * 
-     * @param name User's full name
-     * @param email User's email address
-     * @param password User's password
-     * @return Optional containing the registered User if successful, empty otherwise
-     * @throws SQLException if a database error occurs
-     * @throws IllegalArgumentException if input validation fails
-     */
+  
     public Optional<User> register(String name, String email, String password) throws SQLException, Exception {
         validateRegistrationInput(name, email, password);
         
@@ -73,13 +64,6 @@ public class UserController {
         return Optional.empty();
     }
 
-    /**
-     * 
-     * @param email User's email address
-     * @param password User's password
-     * @return Optional containing the authenticated User if successful, empty otherwise
-     * @throws SQLException if a database error occurs
-     */
         public Optional<User> authenticate(String email, String password) throws SQLException, Exception {
     try (Connection conn = DatabaseConnection.getConnection()) {
         String sql = """
@@ -114,22 +98,12 @@ public class UserController {
     }
     return Optional.empty();
 }
-    /**
-     * Updates user password.
-     * 
-     * @param userId User's ID
-     * @param currentPassword Current password for verification
-     * @param newPassword New password to set
-     * @return true if password was updated successfully
-     * @throws SQLException if a database error occurs
-     * @throws IllegalArgumentException if password validation fails
-     */
+ 
     public boolean updatePassword(int userId, String currentPassword, String newPassword) 
             throws SQLException, Exception {
         validatePassword(newPassword);
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            // Verify current password
             String sql = "SELECT 1 FROM user WHERE user_id = ? AND password = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setInt(1, userId);
@@ -185,7 +159,42 @@ public class UserController {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             LOGGER.log(Level.WARNING, "Failed to update last login time", ex);
-            // Don't throw the exception as this is not a critical operation
         }
     }
+    public User getUserById(int userId) throws SQLException, Exception {
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql = "SELECT * FROM user WHERE user_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Integer restaurantId = null;
+                    return new User(
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getTimestamp("created_at"),
+                        rs.getTimestamp("updated_at"),
+                        restaurantId
+                    );
+                }
+            }
+        }
+    }
+    return null;
+}
+
+public boolean updateUserProfile(int userId, String newName, String newEmail) throws SQLException, Exception {
+    try (Connection conn = DatabaseConnection.getConnection()) {
+        String sql = "UPDATE user SET name = ?, email = ?, updated_at = NOW() WHERE user_id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newName);
+            stmt.setString(2, newEmail);
+            stmt.setInt(3, userId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+}
 }

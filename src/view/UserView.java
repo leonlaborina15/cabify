@@ -3,14 +3,20 @@ package view;
 
 import controller.DashboardController;
 import controller.RestaurantController;
+import controller.UserController;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.Restaurant;
+import model.Session;
 
 
 public class UserView extends javax.swing.JFrame {
@@ -21,11 +27,17 @@ public class UserView extends javax.swing.JFrame {
          initComponents();
         loadRestaurantsToTable();
         setupTableRowSelection();
+         loadUserProfile();
         viewDetails.setEnabled(false);
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt) {
         searchBtnActionPerformed(evt);
+        
+        
     }
+    
+    
+    
 });
 inputSearch.addActionListener(new java.awt.event.ActionListener() {
     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -35,6 +47,15 @@ inputSearch.addActionListener(new java.awt.event.ActionListener() {
 
 filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
     ascendingDescending.addActionListener(evt -> sortAndReloadTable());
+    
+    Font headerFont = new Font("Segoe UI", Font.BOLD, 12);
+        Color headerColor = new Color(242,242,242);
+
+
+        restoTableView.getTableHeader().setFont(headerFont);
+        restoTableView .getTableHeader().setOpaque(false);
+        restoTableView.getTableHeader().setBackground(headerColor);
+        restoTableView.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,6 +63,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
     private void initComponents() {
 
         updateCapacity1 = new javax.swing.JButton();
+        Username = new javax.swing.JLabel();
         tabPanne = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         inputSearch = new javax.swing.JTextField();
@@ -62,7 +84,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         viewDetails = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        capacityBar = new javax.swing.JProgressBar();
+        capacityBar1 = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         waitTimeLabel1 = new javax.swing.JLabel();
@@ -82,6 +104,15 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         jPanel12 = new javax.swing.JPanel();
         restoStatus2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        userNameLabel = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        userEmailLabel = new javax.swing.JLabel();
+        Username1 = new javax.swing.JLabel();
+        Username2 = new javax.swing.JLabel();
+        updateUser = new javax.swing.JButton();
+        logout = new javax.swing.JButton();
 
         updateCapacity1.setBackground(new java.awt.Color(118, 171, 174));
         updateCapacity1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -92,6 +123,9 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
                 updateCapacity1ActionPerformed(evt);
             }
         });
+
+        Username.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Username.setText("Email Address:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -217,7 +251,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         waitTimeLabel.setText("10 minutes");
 
         viewDetails.setBackground(new java.awt.Color(118, 171, 174));
-        viewDetails.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        viewDetails.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         viewDetails.setForeground(new java.awt.Color(255, 255, 255));
         viewDetails.setText("View Details");
         viewDetails.addActionListener(new java.awt.event.ActionListener() {
@@ -231,7 +265,20 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addGap(129, 129, 129)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(56, 56, 56)
+                        .addComponent(filterByDistanceOrCrowd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ascendingDescending, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(searchBtn))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -244,25 +291,12 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
                             .addComponent(distanceLabel)))
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(viewDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(56, 56, 56)
-                        .addComponent(filterByDistanceOrCrowd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(ascendingDescending, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(searchBtn))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(117, 117, 117))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(99, 99, 99)
+                .addGap(107, 107, 107)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -289,18 +323,18 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(distanceLabel))
-                        .addGap(37, 37, 37)
+                        .addGap(64, 64, 64)
                         .addComponent(viewDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(147, 147, 147))
+                .addGap(139, 139, 139))
         );
 
         tabPanne.addTab("Home", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(34, 40, 49));
 
-        capacityBar.setBackground(new java.awt.Color(49, 54, 63));
-        capacityBar.setForeground(new java.awt.Color(0, 0, 0));
+        capacityBar1.setBackground(new java.awt.Color(49, 54, 63));
+        capacityBar1.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel2.setText("Crowd");
@@ -352,7 +386,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
                         .addComponent(waitTimeLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(capacityBar, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(capacityBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
         jPanel4Layout.setVerticalGroup(
@@ -360,7 +394,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(capacityBar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(capacityBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -456,7 +490,7 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         restoName1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         restoName1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jPanel12.setBackground(new java.awt.Color(255, 51, 51));
+        jPanel12.setBackground(new java.awt.Color(34, 40, 49));
         jPanel12.setForeground(new java.awt.Color(255, 255, 255));
 
         restoStatus2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -531,15 +565,116 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
 
         tabPanne.addTab("Restaurant", jPanel2);
 
+        jPanel3.setBackground(new java.awt.Color(34, 40, 49));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("PROFILE");
+
+        userNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        userNameLabel.setText("Email Address");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(userNameLabel)
+                .addContainerGap(186, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(userNameLabel)
+                .addGap(16, 16, 16))
+        );
+
+        userEmailLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        userEmailLabel.setText("Email Address");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(userEmailLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(userEmailLabel)
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        Username1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        Username1.setForeground(new java.awt.Color(255, 255, 255));
+        Username1.setText("FullName");
+
+        Username2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        Username2.setForeground(new java.awt.Color(255, 255, 255));
+        Username2.setText("Email Address");
+
+        updateUser.setBackground(new java.awt.Color(118, 171, 174));
+        updateUser.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        updateUser.setForeground(new java.awt.Color(255, 255, 255));
+        updateUser.setText("UPDATE");
+        updateUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateUserActionPerformed(evt);
+            }
+        });
+
+        logout.setBackground(new java.awt.Color(255, 51, 51));
+        logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+        logout.setText("Logout");
+        logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1031, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(191, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Username1)
+                    .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Username2)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(updateUser, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(153, 153, 153))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 605, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jLabel3)
+                .addGap(45, 45, 45)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Username1)
+                    .addComponent(Username2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(updateUser, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                    .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         tabPanne.addTab("Profile", jPanel3);
@@ -548,15 +683,11 @@ filterByDistanceOrCrowd.addActionListener(evt -> sortAndReloadTable());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 1031, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(tabPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 1031, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(tabPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(tabPanne, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -610,22 +741,45 @@ int selectedRow = restoTableView.getSelectedRow();
         tabPanne.setSelectedIndex(0);
     }//GEN-LAST:event_updateCapacityActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void updateUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateUserActionPerformed
+  String currentName = userNameLabel.getText();
+    String currentEmail = userEmailLabel.getText();
+
+    String newName = JOptionPane.showInputDialog(this, "Enter new name:", currentName);
+    if (newName == null || newName.trim().isEmpty()) return;
+
+    String newEmail = JOptionPane.showInputDialog(this, "Enter new email:", currentEmail);
+    if (newEmail == null || newEmail.trim().isEmpty()) return;
+
+    int adminId = Session.getInstance().getAdminId();
+    UserController userController = new UserController();
+    try {
+        boolean success = userController.updateUserProfile(adminId, newName, newEmail);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Profile updated successfully.");
+            loadUserProfile(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update profile.");
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating profile: " + ex.getMessage());
+    }    }//GEN-LAST:event_updateUserActionPerformed
+
+    private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
+    Session.getInstance().logout(); 
+
+    LoginView login = new LoginView();
+    login.setLocationRelativeTo(null); 
+    login.setVisible(true);
+dispose(); 
+    this.dispose();    }//GEN-LAST:event_logoutActionPerformed
+
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+           UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -635,9 +789,7 @@ int selectedRow = restoTableView.getSelectedRow();
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UserView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new UserView().setVisible(true);
@@ -646,8 +798,11 @@ int selectedRow = restoTableView.getSelectedRow();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Username;
+    private javax.swing.JLabel Username1;
+    private javax.swing.JLabel Username2;
     private javax.swing.JComboBox<String> ascendingDescending;
-    private javax.swing.JProgressBar capacityBar;
+    private javax.swing.JProgressBar capacityBar1;
     private javax.swing.JLabel distanceLabel;
     private javax.swing.JComboBox<String> filterByDistanceOrCrowd;
     private javax.swing.JTextField inputSearch;
@@ -659,6 +814,7 @@ int selectedRow = restoTableView.getSelectedRow();
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -672,12 +828,13 @@ int selectedRow = restoTableView.getSelectedRow();
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton logout;
     private javax.swing.JLabel restoName;
     private javax.swing.JLabel restoName1;
-    private javax.swing.JLabel restoName2;
     private javax.swing.JLabel restoStatus;
     private javax.swing.JLabel restoStatus1;
     private javax.swing.JLabel restoStatus2;
@@ -686,6 +843,9 @@ int selectedRow = restoTableView.getSelectedRow();
     private javax.swing.JTabbedPane tabPanne;
     private javax.swing.JButton updateCapacity;
     private javax.swing.JButton updateCapacity1;
+    private javax.swing.JButton updateUser;
+    private javax.swing.JLabel userEmailLabel;
+    private javax.swing.JLabel userNameLabel;
     private javax.swing.JButton viewDetails;
     private javax.swing.JLabel waitTimeLabel;
     private javax.swing.JLabel waitTimeLabel1;
@@ -782,22 +942,35 @@ private void reloadTableWithCurrentList() {
         });
     }
 }
-
+private void loadUserProfile() {
+    int adminId = Session.getInstance().getAdminId();
+    UserController userController = new UserController();
+    try {
+        model.User user = userController.getUserById(adminId);
+        if (user != null) {
+            userNameLabel.setText(user.getName());
+            userEmailLabel.setText(user.getEmail());
+        }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Unable to load profile info.");
+    }
+}
   private void showRestaurantDetails(Restaurant r) {
     restoName1.setText(r.getName());
 
     int max = r.getMaxCapacity();
     int current = r.getCurrentCapacity();
     int percent = (max > 0) ? (int) ((current * 100.0) / max) : 0;
-    capacityBar.setValue(percent);
-    capacityBar.setStringPainted(true);
-    capacityBar.setString(percent + "% Full");
+    capacityBar1.setValue(percent);
+    capacityBar1.setStringPainted(true);
+    capacityBar1.setString(percent + "% Full");
     if (percent < 50) {
-        capacityBar.setForeground(new java.awt.Color(0, 153, 0));
+        capacityBar1.setForeground(new java.awt.Color(0, 153, 0));
     } else if (percent < 80) {
-        capacityBar.setForeground(new java.awt.Color(255, 204, 0));
+        capacityBar1.setForeground(new java.awt.Color(255, 204, 0));
     } else {
-        capacityBar.setForeground(java.awt.Color.RED);
+        capacityBar1.setForeground(java.awt.Color.RED);
     }
 
     waitTimeLabel1.setText(r.getWaitTime() + " minutes");
