@@ -21,6 +21,14 @@ public class RestoAdminView extends javax.swing.JFrame {
         private RestaurantController restaurantController = new RestaurantController();
         private Restaurant currentRestaurant;
     private int restaurantId;
+        private int calculateWaitTime(int currentCapacity, int maxCapacity) {
+        if (maxCapacity == 0) return 10; // default/failsafe
+        double ratio = (double) currentCapacity / maxCapacity;
+        if (ratio < 0.26) return 10;
+        if (ratio < 0.51) return 15;
+        if (ratio < 0.76) return 25;
+        return 35;
+    }
     /**
      * Creates new form RestoAdminView
      */
@@ -55,7 +63,7 @@ public class RestoAdminView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        labvelMinutes = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         restoName1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
@@ -117,7 +125,7 @@ public class RestoAdminView extends javax.swing.JFrame {
         });
 
         toggleStatus.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        toggleStatus.setText("OPEN,");
+        toggleStatus.setText("OPEN");
         toggleStatus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toggleStatusActionPerformed(evt);
@@ -216,8 +224,8 @@ public class RestoAdminView extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel5.setText("Wait Time:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel6.setText("10 minutes");
+        labvelMinutes.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        labvelMinutes.setText("10 minutes");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -227,7 +235,7 @@ public class RestoAdminView extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addComponent(jLabel5)
                 .addGap(52, 52, 52)
-                .addComponent(jLabel6)
+                .addComponent(labvelMinutes)
                 .addContainerGap(207, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
@@ -236,7 +244,7 @@ public class RestoAdminView extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6))
+                    .addComponent(labvelMinutes))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -395,6 +403,7 @@ public class RestoAdminView extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("SEND NOTIFICATIONS");
 
+        notifMessage.setBackground(new java.awt.Color(233, 232, 232));
         notifMessage.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -403,10 +412,16 @@ public class RestoAdminView extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel17.setText("Message:");
 
+        notifCategory.setBackground(new java.awt.Color(233, 232, 232));
         notifCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crowd Status", "System Update", "Emergency" }));
+        notifCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                notifCategoryActionPerformed(evt);
+            }
+        });
 
         sendNotif.setBackground(new java.awt.Color(118, 171, 174));
-        sendNotif.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        sendNotif.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         sendNotif.setForeground(new java.awt.Color(255, 255, 255));
         sendNotif.setText("SEND");
         sendNotif.addActionListener(new java.awt.event.ActionListener() {
@@ -464,7 +479,7 @@ public class RestoAdminView extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addGap(34, 34, 34)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         tabPanne.addTab("Notifications", jPanel3);
@@ -548,13 +563,16 @@ public class RestoAdminView extends javax.swing.JFrame {
         int restoId = currentRestaurant.getRestaurantId();
         int newCapacity = currentCapacity + 1;
         try {
-            boolean success = restaurantController.updateCurrentCapacity(restoId, newCapacity); // <--- HERE
+            boolean success = restaurantController.updateCurrentCapacity(restoId, newCapacity);
             if (success) {
                 currentRestaurant = restaurantController.getRestaurantById(restoId);
                 currentCapacity = currentRestaurant.getCurrentCapacity();
                 totalCapacity.setText(String.valueOf(currentCapacity));
-                
                 initializeCapacityBar();
+
+                // UPDATE WAIT TIME LABEL
+                int waitTime = calculateWaitTime(currentCapacity, maxCapacity);
+                labvelMinutes.setText(waitTime + " minutes");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update capacity.");
             }
@@ -567,17 +585,20 @@ public class RestoAdminView extends javax.swing.JFrame {
     }//GEN-LAST:event_addCapacityActionPerformed
 
     private void removeCapacityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCapacityActionPerformed
-      if (currentCapacity > 0) {
+  if (currentCapacity > 0) {
         int restoId = currentRestaurant.getRestaurantId();
         int newCapacity = currentCapacity - 1;
         try {
-            boolean success = restaurantController.updateCurrentCapacity(restoId, newCapacity); // <--- HERE
+            boolean success = restaurantController.updateCurrentCapacity(restoId, newCapacity);
             if (success) {
                 currentRestaurant = restaurantController.getRestaurantById(restoId);
                 currentCapacity = currentRestaurant.getCurrentCapacity();
                 totalCapacity.setText(String.valueOf(currentCapacity));
-                
                 initializeCapacityBar();
+
+                // UPDATE WAIT TIME LABEL
+                int waitTime = calculateWaitTime(currentCapacity, maxCapacity);
+                labvelMinutes.setText(waitTime + " minutes");
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update capacity.");
             }
@@ -588,6 +609,10 @@ public class RestoAdminView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Capacity cannot be lower than 0.");
     }
     }//GEN-LAST:event_removeCapacityActionPerformed
+
+    private void notifCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notifCategoryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_notifCategoryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -634,7 +659,6 @@ public class RestoAdminView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -647,6 +671,7 @@ public class RestoAdminView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel labvelMinutes;
     private javax.swing.JComboBox<String> notifCategory;
     private javax.swing.JTextField notifMessage;
     private javax.swing.JButton removeCapacity;
@@ -661,7 +686,7 @@ public class RestoAdminView extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 private void loadRestaurantData() {
-    int restoId = Session.getInstance().getRestaurantId();
+   int restoId = Session.getInstance().getRestaurantId();
     try {
         currentRestaurant = restaurantController.getRestaurantById(restoId);
     } catch (Exception ex) {
@@ -673,16 +698,18 @@ private void loadRestaurantData() {
         restoName.setText(currentRestaurant.getName());
         restoName1.setText(currentRestaurant.getName());
 
-        // Show current capacity in label
         totalCapacity.setText(String.valueOf(currentCapacity));
         initializeCapacityBar();
+
+        int waitTime = calculateWaitTime(currentCapacity, maxCapacity);
+        labvelMinutes.setText(waitTime + " minutes");
     } else {
         maxCapacity = 100;
         currentCapacity = 0;
         restoName.setText("Unknown");
-                restoName1.setText(currentRestaurant.getName());
-
+        restoName1.setText("Unknown");
         totalCapacity.setText("0");
+        labvelMinutes.setText("10 minutes");
         JOptionPane.showMessageDialog(this, "Unable to load restaurant data.");
     }
 }

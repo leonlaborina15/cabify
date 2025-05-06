@@ -3,6 +3,7 @@ package model;
 import java.sql.Timestamp;
 
 public class Restaurant {
+
     private int restaurantId;
     private String name;
     private String location;
@@ -14,13 +15,13 @@ public class Restaurant {
     private Timestamp updatedAt;
     private double crowdPercentage;
     private int waitTime;
+    private double distanceKm;
     private int id;
 
-    // Default constructor
-    public Restaurant() {}
+    public Restaurant() {
+    }
 
-    // Full constructor
-    public Restaurant(int restaurantId, String name, String location, int maxCapacity, int currentCapacity, String status, String gpsCoordinates, Timestamp createdAt, Timestamp updatedAt, double crowdPercentage, int waitTime) {
+    public Restaurant(int restaurantId, String name, String location, int maxCapacity, int currentCapacity, String status, String gpsCoordinates, Timestamp createdAt, Timestamp updatedAt, double crowdPercentage, int waitTime, double distanceKm) {
         this.restaurantId = restaurantId;
         this.name = name;
         this.location = location;
@@ -32,6 +33,7 @@ public class Restaurant {
         this.updatedAt = updatedAt;
         this.crowdPercentage = crowdPercentage;
         this.waitTime = waitTime;
+        this.distanceKm = distanceKm;
     }
 
     // Getters and Setters
@@ -122,8 +124,16 @@ public class Restaurant {
     public void setWaitTime(int waitTime) {
         this.waitTime = waitTime;
     }
-    
+
+    public double getDistanceKm() {
+        return distanceKm;
+    }
+
+    public void setDistanceKm(double distanceKm) {
+        this.distanceKm = distanceKm;
+    }
+
     public void setId(int restaurantId) {
-    this.restaurantId = restaurantId;
+        this.restaurantId = restaurantId;
     }
 }
